@@ -12,34 +12,59 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Open Sans', sans-serif; color: #333; background: #fefbf5; line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
+    img, video { max-width: 100%; display: block; }
 
     /* Header & Nav */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(255,255,255,0.85);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 100;
-    }
-    nav {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-    }
+    header { position: fixed; top: 0; left: 0; width: 100%; background: rgba(255,255,255,0.85); box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 100; }
+    nav { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
     nav .logo { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: #2c3e50; }
     nav ul { list-style: none; display: flex; }
     nav ul li + li { margin-left: 1.5rem; }
     nav ul li a { font-weight: 600; padding: 0.5rem; transition: color 0.3s; }
     nav ul li a:hover { color: #00796b; }
 
+    /* Spacer below fixed header */
+    .spacer { height: 80px; }
+
     /* Hero Banner */
-    .hero img.banner { width: 100%; height: auto; display: block; }
+    .hero img.banner { width: 100%; height: auto; }
+
+    /* Video Wrapper */
+    .video-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .video-container {
+      flex: 1 1 50%;
+      padding-right: 1rem;
+    }
+    .video-container video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .video-desc {
+      flex: 1 1 50%;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 3em;
+      font-size: 1.5rem;
+      color: #555;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .video-desc h3 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: #00796b;
+      margin-bottom: 1.5rem;
+    }
 
     /* Sections */
     section { padding: 4rem 2rem; max-width: 1200px; margin: auto; }
@@ -55,16 +80,11 @@
 
     /* Price Menu */
     .prices { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 600px; margin: auto; text-align: center; }
-    .prices img { max-width: 100%; height: auto; }
+    .prices img { margin: 0.5rem 0; }
 
-    /* Appointment Form */
-    .appointment form { max-width: 600px; margin: auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .appointment form .form-group { margin-bottom: 1rem; }
-    .appointment form label { display: block; margin-bottom: 0.3rem; font-weight: 600; }
-    .appointment form input,
-    .appointment form select { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 4px; }
-    .appointment form button { display: block; width: 100%; padding: 0.8rem; background: #00796b; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background 0.3s; }
-    .appointment form button:hover { background: #005047; }
+    /* Appointment Section */
+    .appointment { padding: 0; }
+    .appointment .calendly-inline-widget { width: 100%; min-width: 320px; height: 630px; }
 
     /* Contact & Map */
     .contact .info { text-align: center; margin-bottom: 2rem; }
@@ -75,8 +95,18 @@
     footer { background: #2c3e50; color: #fff; text-align: center; padding: 1.5rem 2rem; font-size: 0.9rem; }
     footer a { color: #fff; }
 
-    /* Spacer */
-    .spacer { height: 80px; }
+    /* Responsive: Mobile */
+    @media (max-width: 768px) {
+      nav { flex-direction: column; padding: 1rem; }
+      nav ul { flex-direction: column; width: 100%; }
+      nav ul li + li { margin: 0.5rem 0; }
+      section { padding: 2rem 1rem; }
+      .services { grid-template-columns: 1fr; }
+      .prices, .appointment .calendly-inline-widget { padding: 1rem; }
+      .map-container iframe { height: 200px; }
+      .video-wrapper { flex-direction: column; padding: 1rem; }
+      .video-container, .video-desc { flex: 1 1 100%; padding: 0; }
+    }
   </style>
 </head>
 <body>
@@ -92,13 +122,14 @@
       </ul>
     </nav>
   </header>
+
   <div class="spacer"></div>
 
   <section id="hero" class="hero">
     <img src="banner.jpg" alt="Full Body & Foot Massage & SPA Banner" class="banner">
   </section>
 
-  <section id="services">
+<section id="services">
      <h2>Welcome to Full Body & Foot Spa!!</h2>
     <h2>Our Services</h2>
     <div class="services">
@@ -110,17 +141,17 @@
         </div>
       </div>
       <div class="service-card">
-        <img src="foot.jpg" alt="Foot Revitalizer">
+        <img src="foot.jpg" alt="Foot Massage">
         <div class="content">
           <h3>Foot Revitalizer</h3>
           <p>Refresh and invigorate tired feet with targeted techniques that restore energy and improve circulation.</p>
         </div>
       </div>
       <div class="service-card">
-        <img src="footbody.jpg" alt="Deluxe Body & Foot Combo Massage">
+        <img src="FaceMassage.jpg" alt="Facial Massage">
         <div class="content">
-          <h3>Deluxe Body & Foot Combo Massage</h3>
-          <p>Experience the best of both worlds with a combined full body and foot massage for ultimate relaxation.</p>
+          <h3>Facial Massage</h3>
+          <p>Our Facial massage can stimulate collagen production through increased blood flow and mechanical manipulation. This can lead to improved skin elasticity and a more youthful appearance over time.</p>
         </div>
       </div>
       <div class="service-card">
@@ -133,17 +164,45 @@
     </div>
   </section>
 
+    <div class="video-wrapper">
+    <div class="video-container">
+      <video autoplay muted loop playsinline class="responsive-video">
+        <source src="vedio1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    
+    <div class="video-desc">
+      <h3>Cupping Method</h3>
+      <p>Cupping method:
+A method of expelling the air inside the tank barrel by various methods to create a negative pressure and make it adsorb to the surface of the body to treat diseases. Through suction and extraction, it can cause local tissue congestion, promote the smooth flow of meridians, vigorous qi and blood, and have the functions of invigorating blood and qi, relieving pain and swelling, dissipating cold, dehumidifying, dispersing knots and pulling out poison, and reducing fever</p>
+    </div>
+  </div>
+
+   <div class="video-wrapper">
+    <div class="video-container">
+      <video autoplay muted loop playsinline class="responsive-video">
+        <source src="vedio2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    
+    <div class="video-desc">
+      <p>To maintain youth through skin care and beauty, the focus is on regulating balance from the inside, such as the balance of vitamins, minerals and antioxidants, as well as hormone balance to promote skin health, so that the body is ready to receive nutrients from the outside to achieve long-term keep the skin bright, young effect, to achieve a comprehensive beauty care inside and outside</p>
+    </div>
+  </div>
+
+
   <section id="prices" class="prices">
     <h2>Our Price Menu</h2>
     <img src="price1.jpg" alt="Price Menu">
-     <img src="price2.jpg" alt="Price Menu">
+    <img src="price2.jpg" alt="Price Menu">
   </section>
 
   <section id="appointment" class="appointment">
     <h2>Book Your Appointment</h2>
-<div class="calendly-inline-widget" data-url="https://calendly.com/lisalee94468/massage_appointment" style="min-width:320px;height:630px;"></div>
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-
+    <div class="calendly-inline-widget" data-url="https://calendly.com/lisalee94468/massage_appointment"></div>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
   </section>
 
   <section id="contact" class="contact">
@@ -167,12 +226,6 @@
       e.preventDefault();
       document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
     }));
-    function handleSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      alert(`Thank you, ${name}! Your appointment request has been received.`);
-      e.target.reset();
-    }
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
